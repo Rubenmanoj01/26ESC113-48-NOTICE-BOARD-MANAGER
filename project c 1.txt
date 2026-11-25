@@ -1,0 +1,84 @@
+/* Notice Board Manager - Phase 1 */
+#include <stdio.h>
+
+#define MAX 50 /* Maximum number of notices */
+
+int main() {
+    char title[MAX][50];    /* Array to store notice titles */
+    char category[MAX][20]; /* Array to store notice categories */
+    int count = 0;          /* Total notices stored so far */
+    int choice;
+    int n;
+    int i;
+
+    do {
+        /* Display the main menu */
+        printf("\n===== NOTICE BOARD =====\n");
+        printf("1. Add notice\n");
+        printf("2. View all notices\n");
+        printf("3. Search notice by S.No.\n");
+        printf("4. Exit\n");
+        printf("Enter choice: ");
+        scanf("%d", &choice);
+
+        switch (choice) {
+            case 1: /* Add a new notice */
+                if (count == MAX) {
+                    printf("Board is full. Cannot add more notices.\n");
+                    break;
+                }
+                
+                printf("Enter title: ");
+                scanf(" %[^\n]", title[count]); /* Reads string with spaces */
+                
+                printf("Enter category: ");
+                scanf(" %[^\n]", category[count]); /* Reads string with spaces */
+                
+                count++;
+                printf("Notice %d added.\n", count);
+                break;
+
+            case 2: /* View all stored notices */
+                if (count == 0) {
+                    printf("No notices yet.\n");
+                    break;
+                }
+                
+                printf("\n%-6s %-40s %-20s\n", "S.No.", "Title", "Category");
+                printf("------------------------------------------------------------------\n");
+                
+                for (i = 0; i < count; i++) {
+                    printf("%-6d %-40s %-20s\n", i + 1, title[i], category[i]);
+                }
+                break;
+
+            case 3: /* Search notice by Serial Number */
+                if (count == 0) {
+                    printf("No notices available to search.\n");
+                    break;
+                }
+                
+                printf("Enter S.No. to search: ");
+                scanf("%d", &n);
+                
+                if (n < 1 || n > count) {
+                    printf("S.No. %d not found.\n", n);
+                } else {
+                    printf("\n%-6s %-40s %-20s\n", "S.No.", "Title", "Category");
+                    printf("------------------------------------------------------------------\n");
+                    printf("%-6d %-40s %-20s\n", n, title[n - 1], category[n - 1]);
+                }
+                break;
+
+            case 4: /* Exit the program */
+                printf("Goodbye!\n");
+                break;
+
+            default: /* Handle invalid menu choices */
+                printf("Invalid choice. Try again.\n");
+        }
+
+    } while (choice != 4);
+
+    return 0;
+}
